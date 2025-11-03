@@ -10,7 +10,7 @@ export default function Todo() {
 
   const addTask = () => {
     if (input.trim() === "") return alert("Task Cannot Be Empty !");
-    if (task.length >= 10) return alert("You can only add up to 10 tasks!");
+    if (task.length >= 8) return alert("You can only add up to 8 tasks!");
     setTask([...task, input]);
     setDone([...done, false]);
     setInput("");
@@ -34,14 +34,26 @@ export default function Todo() {
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-black">
       <div className="z-10 p-6 rounded-2xl shadow-2xl text-center bg-white/20 w-[400px] h-fit min-h-[500px] flex flex-col">
-        <h1 className="text-3xl italic text-slate-300 mb-4">All Tasks {task.length>0 ? `: ${task.length}` : ""}</h1>
+        <h1 className="text-3xl italic text-slate-300 mb-4">
+          All Tasks {task.length > 0 ? `: ${task.length}` : ""}
+        </h1>
         <div className="flex justify-center gap-2 mb-4">
           <input
             type="text"
             placeholder="Enter Task Here"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value.length === 50) {
+                alert(
+                  "Character limit reached! Maximum 50 characters allowed."
+                );
+                return;
+              }
+              setInput(value);
+            }}
             onKeyDown={(e) => e.key === "Enter" && addTask()}
+            maxLength={50}
             className="border border-gray-400 rounded-md px-3 py-1 text-white placeholder-slate-300 bg-transparent"
           />
           <button
@@ -72,7 +84,7 @@ export default function Todo() {
                 </button>
 
                 <span
-                  className={`flex-1 mx-3 text-left ${
+                  className={`flex-1 mx-3 text-left break-words overflow-hidden text-ellipsis ${
                     done[index]
                       ? "line-through text-gray-400"
                       : "text-slate-300"
