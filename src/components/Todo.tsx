@@ -10,7 +10,7 @@ export default function Todo() {
 
   const addTask = () => {
     if (input.trim() === "") return alert("Task Cannot Be Empty !");
-    if (task.length >= 8) return alert("You can only add up to 8 tasks!");
+    if (task.length >= 10) return alert("You can only add up to 10 tasks!");
     setTask([...task, input]);
     setDone([...done, false]);
     setInput("");
@@ -33,7 +33,7 @@ export default function Todo() {
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-black">
-      <div className="z-10 p-6 rounded-2xl shadow-2xl text-center bg-white/20 w-[400px] h-fit min-h-[500px] flex flex-col">
+      <div className="z-10 p-6 rounded-2xl shadow-2xl text-center bg-white/20 w-[450px] h-[600px] flex flex-col">
         <h1 className="text-3xl italic text-slate-300 mb-4">
           All Tasks {task.length > 0 ? `: ${task.length}` : ""}
         </h1>
@@ -58,13 +58,12 @@ export default function Todo() {
           />
           <button
             onClick={addTask}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-md ease-in duration-100"
+            className="bg-green-700 hover:bg-green-500 text-white px-4 py-1 rounded-md ease-in duration-100"
           >
             Add
           </button>
         </div>
-
-        <div className="flex-1 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent">
+        <div className="flex-1 overflow-y-auto space-y-2 min-h-0 pr-2">
           {task.length === 0 ? (
             <div className="flex flex-col justify-center items-center h-[80%] italic text-2xl text-gray-300">
               <p>Add A Task Now</p>
@@ -73,7 +72,7 @@ export default function Todo() {
             task.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between bg-white/20 px-3 py-2 rounded-md"
+                className="flex items-center justify-between bg-white/20 px-4 py-2 rounded-md"
               >
                 <button onClick={() => toggleTask(index)}>
                   {done[index] ? (
@@ -84,7 +83,7 @@ export default function Todo() {
                 </button>
 
                 <span
-                  className={`flex-1 mx-3 text-left break-words overflow-hidden text-ellipsis ${
+                  className={`flex-1 mx-3 px-2 text-left break-words whitespace-pre-wrap ${
                     done[index]
                       ? "line-through text-gray-400"
                       : "text-slate-300"
